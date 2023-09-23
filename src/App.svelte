@@ -1,5 +1,38 @@
 <script>
   import Greet from './lib/Greet.svelte'
+
+let newTask = "";
+$: tasks = [];
+$: console.log(tasks)
+
+function addTask() {
+  if (newTask.trim() !== "") {
+    tasks = [...tasks, { id: Date.now(), text: newTask, done: false }];
+    newTask = "";
+  }
+}
+
+function toggleDone(id) {
+    console.log(`🚀 ~ file: App.svelte:15 ~ toggleDone ~ id:`, id)
+    tasks = tasks.map(task => {
+      if (task.id === id) {
+          console.log(`🚀 ~ file: App.svelte:25 ~ toggleDone ~ task:`, task)
+            return {
+                ...task,
+                done: !task.done
+            };
+        }
+
+        return task;
+    });
+
+}
+
+
+function deleteTask(id) {
+  tasks = tasks.filter(task => task.id !== id);
+}
+  
 </script>
 
 <svelte:head>
@@ -7,32 +40,28 @@
 </svelte:head>
 
 <main class="container">
-  <h1>Welcome to Tauri!</h1>
 
-  <div class="row">
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo vite" alt="Vite Logo" />
-    </a>
-    <a href="https://tauri.app" target="_blank">
-      <img src="/tauri.svg" class="logo tauri" alt="Tauri Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank">
-      <img src="/svelte.svg" class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Love life.</h1>
+
+<main>
+  <h1>Simple To-Do App</h1>
+  
+  <input 
+    bind:value={newTask} 
+    placeholder="Enter a new task..." 
+    on:keyup={e => e.key === 'Enter' && addTask()}
+  />
+  <button on:click={addTask}>Add</button>
 
   <ul>
-    <li class="bg-cyan-400 border-l-orange-600 text-3xl">Integrate TailwindCSS</li>
-    <li>Make basic TODO app</li>
-    <li>Integrate Pocketbase</li>
+    {#each tasks as task (task.id)}
+      <li>
+        <input type="checkbox" on:change={() => toggleDone(task.id)} />
+        <span class={task.done ? 'done text-green-500 bg-blue-400' : ''} class:done={task.done}>{task.text}</span>
+        <button on:click={() => deleteTask(task.id)}>Delete</button>
+      </li>
+    {/each}
   </ul>
-
-
-
-  <div class="row">
-    <Greet />
-  </div>
+</main>
 
 </main>
 
@@ -43,5 +72,9 @@
 
   .logo.svelte:hover {
     filter: drop-shadow(0 0 2em #ff3e00);
+  }
+  .done {
+    text-decoration: line-through;
+    color: green;
   }
 </style>
