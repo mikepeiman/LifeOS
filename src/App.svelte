@@ -2,7 +2,17 @@
   import Greet from './lib/Greet.svelte'
 
 let newTask = "";
-$: tasks = [];
+// refctor tasks to have id
+
+
+let tasks = [
+  { id: 1, text: "Setup new Tauri-Svelte app", done: false },
+  { id: 2, text: "Install and setup TailwindCSS", done: false },
+  { id: 3, text: "Setup basic TODO app", done: false },
+  { id: 4, text: "Setup localStorage persistence", done: false },
+  { id: 5, text: "Setup pocketbase DB", done: false }
+];
+
 $: console.log(tasks)
 
 function addTask() {
@@ -52,15 +62,19 @@ function deleteTask(id) {
   />
   <button on:click={addTask}>Add</button>
 
-  <ul>
-    {#each tasks as task (task.id)}
-      <li>
-        <input type="checkbox" on:change={() => toggleDone(task.id)} />
-        <span class={task.done ? 'done text-green-500 bg-blue-400' : ''} class:done={task.done}>{task.text}</span>
-        <button on:click={() => deleteTask(task.id)}>Delete</button>
-      </li>
-    {/each}
-  </ul>
+  <div class="flex w-full justify-center">
+    <ul class="flex flex-col text-left gap-2 pt-12">
+      {#each tasks as task (task.id)}
+        <li class="border-b-2 border-blue-300 flex justify-between items-center">
+          <div class="flex items-center space-x-2 pr-4">
+            <input type="checkbox" on:change={() => toggleDone(task.id)} />
+            <span class:done={task.done} class="pl-2">{task.text}</span>
+          </div>
+          <button class="px-2 rounded-none bg-orange-100 self-end end" on:click={() => deleteTask(task.id)}>Delete</button>
+        </li>
+      {/each}
+    </ul>
+  </div>
 </main>
 
 </main>
