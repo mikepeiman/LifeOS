@@ -2,6 +2,10 @@
   import Greet from './lib/Greet.svelte'
 </script>
 
+<svelte:head>
+  <link href="/dist/output.css" rel="stylesheet">
+</svelte:head>
+
 <main class="container">
   <h1>Welcome to Tauri!</h1>
 
@@ -16,10 +20,14 @@
       <img src="/svelte.svg" class="logo svelte" alt="Svelte Logo" />
     </a>
   </div>
+  <h1>Love life.</h1>
 
-  <p>
-    Click on the Tauri, Vite, and Svelte logos to learn more.  </p>
-    <h1>Love life.</h1>
+  <ul>
+    <li class="bg-cyan-400 border-l-orange-600 text-3xl">Integrate TailwindCSS</li>
+    <li>Make basic TODO app</li>
+    <li>Integrate Pocketbase</li>
+  </ul>
+
 
 
   <div class="row">
