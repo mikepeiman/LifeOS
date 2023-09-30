@@ -63,26 +63,27 @@
     }
   }
 
-  // async function toggleDone(id) {
-  //   const taskToUpdate = await pb.collection("tasks").getOne(id);
-  //   if (taskToUpdate) {
-  //     taskToUpdate.done = !taskToUpdate.done;
-  //     // await pb.collection("tasks").update(id, taskToUpdate); // Update task in Pocketbase
-  //     tasks = tasks.map((task) => (task.id === id ? taskToUpdate : task)); // Update local state
-  //   }
-  // }
-
-  function toggleDone(id) {
-    tasks = tasks.map((task) => {
-      if (task.id === id) {
-        return {
-          ...task,
-          done: !task.done,
-        };
-      }
-      return task;
-    });
+  async function toggleDone(id) {
+    const taskToUpdate = await pb.collection("tasks").getOne(id);
+    console.log(`🚀 ~ file: App.svelte:68 ~ toggleDone ~ taskToUpdate:`, taskToUpdate)
+    if (taskToUpdate) {
+      taskToUpdate.done = !taskToUpdate.done;
+      await pb.collection("tasks").update(id, taskToUpdate); // Update task in Pocketbase
+      tasks = tasks.map((task) => (task.id === id ? taskToUpdate : task)); // Update local state
+    }
   }
+
+  // function toggleDone(id) {
+  //   tasks = tasks.map((task) => {
+  //     if (task.id === id) {
+  //       return {
+  //         ...task,
+  //         done: !task.done,
+  //       };
+  //     }
+  //     return task;
+  //   });
+  // }
 
   async function deleteTask(id) {
     // await pb.collection("tasks").delete(id); // Delete task from Pocketbase
