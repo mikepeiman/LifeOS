@@ -41,7 +41,16 @@
   };
 
   async function loadTasks() {
-
+    // adminAuthData
+    // console.log(`🚀 ~ file: App.svelte:29 ~ loadTasks ~ adminAuthData:`, adminAuthData)
+    const resultList = await pb.collection("tasks").getList(1, 50); // Adjust the pagination as needed
+    console.log(
+      `🚀 ~ file: App.svelte:23 ~ loadTasks ~ resultList:`,
+      resultList.items
+    );
+    resultList.items.length ? (tasks = resultList.items) : tasks;
+  }
+  async function loadDefaultTasks() {
     // adminAuthData
     // console.log(`🚀 ~ file: App.svelte:29 ~ loadTasks ~ adminAuthData:`, adminAuthData)
     const resultList = await pb.collection("tasks").getList(1, 50); // Adjust the pagination as needed
@@ -56,8 +65,12 @@
 
   async function addTask() {
     if (newTask.trim() !== "") {
-      let task = { id: Date.now().toString(), text: newTask, done: false };
-      // await pb.collection("tasks").create(task); // Add task to Pocketbase
+      let task = {
+        taskName: newTask,
+        taskDetails: "",
+        done: false,
+      };
+      await pb.collection("tasks").create(task); // Add task to Pocketbase
       tasks = [...tasks, task]; // Update local state
       newTask = "";
     }
@@ -65,7 +78,10 @@
 
   async function toggleDone(id) {
     const taskToUpdate = await pb.collection("tasks").getOne(id);
-    console.log(`🚀 ~ file: App.svelte:68 ~ toggleDone ~ taskToUpdate:`, taskToUpdate)
+    console.log(
+      `🚀 ~ file: App.svelte:68 ~ toggleDone ~ taskToUpdate:`,
+      taskToUpdate
+    );
     if (taskToUpdate) {
       taskToUpdate.done = !taskToUpdate.done;
       await pb.collection("tasks").update(id, taskToUpdate); // Update task in Pocketbase
