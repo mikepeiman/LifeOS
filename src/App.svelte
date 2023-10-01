@@ -51,14 +51,17 @@
     resultList.items.length ? (tasks = resultList.items) : tasks;
   }
   async function loadDefaultTasks() {
-    // adminAuthData
-    // console.log(`🚀 ~ file: App.svelte:29 ~ loadTasks ~ adminAuthData:`, adminAuthData)
-    const resultList = await pb.collection("tasks").getList(1, 50); // Adjust the pagination as needed
-    console.log(
-      `🚀 ~ file: App.svelte:23 ~ loadTasks ~ resultList:`,
-      resultList.items
-    );
-    resultList.items.length ? (tasks = resultList.items) : tasks;
+    pb.autoCancellation(false)
+    defaultTasks.forEach(async (task) => {
+      task.taskName = task.text;
+      task.taskDetails = "";
+      task.done = false;
+      delete task.text;
+      delete task.id
+      console.log(`🚀 ~ file: App.svelte:60 ~ //defaultTasks.forEach ~ task:`, task)
+      await pb.collection("tasks").create(task);
+    });
+    pb.autoCancellation(true)
   }
 
   loadTasks();
@@ -153,7 +156,7 @@
         {/each}
       </ul>
     </div>
-    <button on:click={getTasks}>Load tasks</button>
+    <button on:click={loadDefaultTasks}>Load tasks</button>
     <button on:click={doLogin}>Login</button>
   </main>
 </main>

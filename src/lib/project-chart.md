@@ -1,5 +1,5 @@
 ```mermaid
-graph LR;
+graph LR
 PB(PocketBase)
 UI(User Interface)
 LS(localStorage)
@@ -13,6 +13,9 @@ Tasks-->Task
         name["name: String"]
         password["password: String"]
     end
+    style user fill:#c93,stroke:#369,stroke-width:4px
+
+
     style Task fill:#39f,stroke:#369,stroke-width:4px
     subgraph Task
         collectionId["collectionId: String"]
@@ -23,9 +26,22 @@ Tasks-->Task
         taskDetails["taskDetails: String"]
         taskName["taskName: String"]
         updated["updated: Date"]
-        user["user: String"]
+        user
     end
 
+    
 PB-->Collections
 Collections-->Tasks
+
+```
+
+```mermaid
+graph 
+    style TODO fill:#39f,stroke:#369,stroke-width:4px
+    subgraph TODO
+        1("get delete to PB working")
+        2("implement drag and drop and task ordering")
+        3("get task update working")
+    end
+
 ```
