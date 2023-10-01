@@ -127,9 +127,9 @@
   <link href="/dist/output.css" rel="stylesheet" />
 </svelte:head>
 
-<main class="container">
-  <main>
-    <h1>Simple To-Do App</h1>
+<main class="container p-0 h-full">
+  <main class="bg-white pt-24 h-full bg-gradient-to-br from-blue-200 to-purple-200 ">
+    <h1 class="text-3xl">Simple To-Do App</h1>
 
     <input
       bind:value={newTask}
@@ -162,6 +162,9 @@
 </main>
 
 <style>
+  :global(#app) {
+    height: 100vh;
+  }
   .logo.vite:hover {
     filter: drop-shadow(0 0 2em #747bff);
   }
