@@ -51,17 +51,20 @@
     resultList.items.length ? (tasks = resultList.items) : tasks;
   }
   async function loadDefaultTasks() {
-    pb.autoCancellation(false)
+    pb.autoCancellation(false);
     defaultTasks.forEach(async (task) => {
       task.taskName = task.text;
       task.taskDetails = "";
       task.done = false;
       delete task.text;
-      delete task.id
-      console.log(`🚀 ~ file: App.svelte:60 ~ //defaultTasks.forEach ~ task:`, task)
+      delete task.id;
+      console.log(
+        `🚀 ~ file: App.svelte:60 ~ //defaultTasks.forEach ~ task:`,
+        task
+      );
       await pb.collection("tasks").create(task);
     });
-    pb.autoCancellation(true)
+    pb.autoCancellation(true);
   }
 
   loadTasks();
@@ -92,20 +95,8 @@
     }
   }
 
-  // function toggleDone(id) {
-  //   tasks = tasks.map((task) => {
-  //     if (task.id === id) {
-  //       return {
-  //         ...task,
-  //         done: !task.done,
-  //       };
-  //     }
-  //     return task;
-  //   });
-  // }
-
   async function deleteTask(id) {
-    // await pb.collection("tasks").delete(id); // Delete task from Pocketbase
+    await pb.collection("tasks").delete(id); // Delete task from Pocketbase
     tasks = tasks.filter((task) => task.id !== id); // Update local state
   }
 
@@ -127,15 +118,19 @@
   <link href="/dist/output.css" rel="stylesheet" />
 </svelte:head>
 
-<main class="container p-0 h-full">
-  <main class="bg-white pt-24 h-full bg-gradient-to-br from-blue-200 to-purple-200 ">
-    <h1 class="text-3xl">Simple To-Do App</h1>
+<main class="container p-0 h-full w-full">
+  <main
+    class="bg-white pt-24 h-full w-screen bg-gradient-to-br from-blue-200 to-purple-200">
+    <h1 class="text-3xl pb-4">Simple To-Do App</h1>
 
     <input
+      class="p-2"
       bind:value={newTask}
       placeholder="Enter a new task..."
       on:keyup={(e) => e.key === "Enter" && addTask()} />
-    <button on:click={addTask}>Add</button>
+    <button
+      class="p-2 bg-white bg-gradient-to-br from-blue-500 to-purple-500 text-white"
+      on:click={addTask}>Add</button>
 
     <div class="flex w-full justify-center">
       <ul class="flex flex-col text-left gap-2 pt-12">
@@ -156,8 +151,8 @@
         {/each}
       </ul>
     </div>
-    <button on:click={loadDefaultTasks}>Load tasks</button>
-    <button on:click={doLogin}>Login</button>
+    <button class="p-2" on:click={loadDefaultTasks}>Load tasks</button>
+    <button class="p-2" on:click={doLogin}>Login</button>
   </main>
 </main>
 
