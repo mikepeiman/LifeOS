@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <link href="output.css" rel="stylesheet" />
+  <link href="/output.css" rel="stylesheet" />
 </svelte:head>
 
 <main class="w-screen p-0 h-full  bg-white bg-gradient-to-br from-blue-200 to-purple-200">
