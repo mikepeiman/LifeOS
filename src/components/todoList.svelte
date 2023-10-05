@@ -11,7 +11,7 @@
 
     // import PocketBase from "pocketbase";
     let newTask = "";
-    $: tasks = [];
+    $: tasks = [{ id: 1, text: "Setup new Tauri-Svelte app", done: false }];
     onMount(async () => {
       console.log("mounted");
       await doLogin();
