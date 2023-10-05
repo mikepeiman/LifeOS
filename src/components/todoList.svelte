@@ -11,7 +11,7 @@
 
     // import PocketBase from "pocketbase";
     let newTask = "";
-    $: tasks = [{ id: 1, text: "Setup new Tauri-Svelte app", done: false }];
+    $: tasks = [];
     onMount(async () => {
       console.log("mounted");
       await doLogin();
@@ -37,19 +37,21 @@
   </script>
 
 
-<main class="container p-0 h-full w-full">
+
     <main
-      class="bg-white pt-24 h-full w-screen bg-gradient-to-br from-blue-200 to-purple-200">
+      class="h-full w-screen pt-24 flex flex-col items-center">
       <h1 class="text-3xl pb-4">Simple To-Do App</h1>
   
-      <input
-        class="p-2"
-        bind:value={newTask}
-        placeholder="Enter a new task..."
-        on:keyup={(e) => e.key === "Enter" && handleAddTask()} />
-      <button
-        class="p-2 bg-white bg-gradient-to-br from-blue-500 to-purple-500 text-white"
-        on:click={handleAddTask}>Add</button>
+      <div class="flex">
+        <input
+          class="p-2"
+          bind:value={newTask}
+          placeholder="Enter a new task..."
+          on:keyup={(e) => e.key === "Enter" && handleAddTask()} />
+        <button
+          class="p-2 bg-white bg-gradient-to-br from-blue-500 to-purple-500 text-white"
+          on:click={handleAddTask}>Add</button>
+      </div>
   
       <div class="flex w-full justify-center">
         <ul class="flex flex-col text-left gap-2 pt-12">
@@ -74,12 +76,9 @@
       </div>
       <button class="p-2" on:click={doLogin}>Login</button>
     </main>
-  </main>
   
   <style>
-    :global(#app) {
-      height: 100vh;
-    }
+
     .logo.vite:hover {
       filter: drop-shadow(0 0 2em #747bff);
     }
