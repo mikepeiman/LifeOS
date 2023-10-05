@@ -63,8 +63,12 @@ async function loadTasks() {
   }
 
   async function deleteTask(id) {
-    await pb.collection("tasks").delete(id); // Delete task from Pocketbase
+    console.log(`🚀 ~ file: dbService.js:66 ~ deleteTask ~ id:`, id)
+    let res = await pb.collection("tasks").delete(id); // Delete task from Pocketbase
+    console.log(`🚀 ~ file: dbService.js:68 ~ deleteTask ~ res:`, res)
     tasks = tasks.filter((task) => task.id !== id); // Update local state
+    return tasks
+
   }
 
   export { tasks, doLogin, loadTasks, addTask, toggleDone, deleteTask };
