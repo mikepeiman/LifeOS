@@ -11,22 +11,47 @@
   } from "../lib/dbService.js";
 
   let newTask = "";
-  let tasks = [];
+  let tasks = []
+  let tasksFromDB = [];
   onMount(async () => {
       console.log("mounted");
       await doLogin();
-      tasks = await loadTasks();
+      tasksFromDB = await loadTasks();
+      tasks = loadTasksFromLocalStorage();
       console.log(`🚀 ~ file: todoList.svelte:20 ~ onMount ~ tasks:`, tasks);
-      if (tasks.length === 0) {
-          tasks = defaultTasks;
+      if (tasksFromDB.length > 0) {
+        tasks = tasksFromDB;
+        saveTasksToLocalStorage();
       }
   });
+  // a function to load tasks from localStorage if present
+  function loadTasksFromLocalStorage() {
+      return localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks")) : [];
+  }
+
+  // a function to save tasks to localStorage
+  function saveTasksToLocalStorage() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
 
       
   async function handleAddTask() {
       tasks = await addTask(newTask);
       console.log(`🚀 ~ file: todoList.svelte:26 ~ handleAddTask ~ tasks:`, tasks);
       newTask = '';  // Clear the input after adding
+      saveTasksToLocalStorage();
+  }
+
+  async function handleDeleteTask(id) {
+      tasks = await deleteTask(id);
+      console.log(`🚀 ~ file: todoList.svelte:32 ~ handleDeleteTask ~ tasks:`, tasks);
+      saveTasksToLocalStorage();
+  }
+
+  async function handleToggleDone(id) {
+      tasks = await toggleDone(id);
+      console.log(`🚀 ~ file: todoList.svelte:38 ~ handleToggleDone ~ tasks:`, tasks);
+      saveTasksToLocalStorage();
   }
 
   let defaultTasks = [
@@ -38,6 +63,9 @@
   ];
 
   $: localStorage.setItem("tasks", JSON.stringify(tasks));
+// TODO [ x ] : figure out correct way to set full width without triggering overflow on scrollbar
+// TODO [ x ] : load and save to localStorage, overwrite from db if available
+// TODO [  ] : decide on a sensible dataflow and project structure for db functions and components
 </script>
 
 <main class="h-full w-screen pt-24 flex flex-col items-center">
@@ -48,7 +76,7 @@
   <div class="flex w-full justify-center">
       <ul class="flex flex-col text-left gap-2 pt-12">
           {#each tasks as task (task.id)}
-              <TodoListItem {task} {toggleDone} {deleteTask} />
+              <TodoListItem {task} {handleToggleDone} {handleDeleteTask} />
           {/each}
       </ul>
   </div>

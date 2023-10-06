@@ -60,6 +60,7 @@ async function loadTasks() {
       await pb.collection("tasks").update(id, taskToUpdate); // Update task in Pocketbase
       tasks = tasks.map((task) => (task.id === id ? taskToUpdate : task)); // Update local state
     }
+    return tasks
   }
 
   async function deleteTask(id) {
