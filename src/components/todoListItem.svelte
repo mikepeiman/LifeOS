@@ -1,7 +1,9 @@
 <script>
+    export let deleteTask
+
     export let task;
     export let toggleDone;
-    export let handleDeleteTask;
+
 
 
 </script>
@@ -16,7 +18,7 @@
     </div>
     <button
         class="px-2 rounded-none bg-orange-100 self-end end"
-        on:click={() => handleDeleteTask(task.id)}>Delete</button>
+        on:click={() => deleteTask(task.id)}>Delete</button>
 </li>
 
 <style>

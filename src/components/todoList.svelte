@@ -23,11 +23,6 @@
   });
 
       
-  async function handleDeleteTask(id) {
-      tasks = await deleteTask(id);
-  }
-
-
   async function handleAddTask() {
       tasks = await addTask(newTask);
       console.log(`🚀 ~ file: todoList.svelte:26 ~ handleAddTask ~ tasks:`, tasks);
@@ -53,7 +48,7 @@
   <div class="flex w-full justify-center">
       <ul class="flex flex-col text-left gap-2 pt-12">
           {#each tasks as task (task.id)}
-              <TodoListItem {task} {toggleDone} {handleDeleteTask} />
+              <TodoListItem {task} {toggleDone} {deleteTask} />
           {/each}
       </ul>
   </div>
