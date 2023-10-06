@@ -2,7 +2,7 @@
   import TodoList from "./components/todoList.svelte";
   let isProd = location.hostname !== "localhost";
   console.log(`🚀 ~ file: App.svelte:4 ~ location.hostname:`, location.hostname)
-  let cssPath = isProd ? "/output.css" : "/dist/output.css";
+  let cssPath = isProd ? "./output.css" : "/dist/output.css";
   console.log(`🚀 ~ file: App.svelte:6 ~ cssPath:`, cssPath)
 </script>
 
