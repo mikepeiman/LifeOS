@@ -1,10 +1,11 @@
 <script>
   import TodoList from "./components/todoList.svelte";
-  
+  let isProd = location.hostname !== "localhost";
+  let cssPath = isProd ? "/output.css" : "/dist/output.css";
 </script>
 
 <svelte:head>
-  <link href="dist/output.css" rel="stylesheet" />
+  <link href="{cssPath}" rel="stylesheet" />
 </svelte:head>
 
 <main class="w-screen p-0 h-full  bg-white bg-gradient-to-br from-blue-200 to-purple-200">
