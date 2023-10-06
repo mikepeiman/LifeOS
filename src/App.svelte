@@ -6,6 +6,7 @@
 
 <svelte:head>
   <link href="{cssPath}" rel="stylesheet" />
+  console.log(`🚀 ~ file: App.svelte:9 ~ cssPath:`, cssPath)
 </svelte:head>
 
 <main class="w-screen p-0 h-full  bg-white bg-gradient-to-br from-blue-200 to-purple-200">
